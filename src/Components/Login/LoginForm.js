@@ -1,51 +1,59 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import useForm from '../../Hooks/useForm';
+import Button from '../Form/Button';
+import Input from '../Form/Input';
+import { UserContext } from '../../UserContext';
+import Error from '../Helper/Error';
+import styles from  "./LoginForm.module.css";
+import stylesbtn from  "../Form/Button.module.css";
+
 
 const LoginForm = () => {
-
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [token, setToken] = React.useState("");
+  
+  const username = useForm();
+  const password = useForm();
+  
+  const {userLogin, error, loading} = React.useContext(UserContext);
+  // const usuario = React.useContext(UserContext);
+  
+  // console.log(userLogin);
 
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    let response = await fetch('http://dogsapi.test/json/jwt-auth/v1/token',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username,
+    if(username.validate() && password.validate()){
+
+      userLogin(username.value, password.value);
    
-        password,
-      })
-    });
- 
-    let response_json = await response.json();
- 
-    setToken(response_json.token)
- 
-    console.log(response_json);
+    }
+
 
     
   }
 
   return (
-    <section>
+    <section className='animeLeft'>
    
 
-      <h1>Login</h1>
-      <form action="" onSubmit={handleSubmit}>
-        <input value={username} type="text" onChange={({target})=> setUsername(target.value)} />
-        <input value={password} type="password" onChange={({target})=> setPassword(target.value)} />
+      <h1 className='title'>Login</h1>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <Input name="usuario" label="Usuário" id="usuario" type="text" {...username} />
+        <Input name="usuario" label="Senha" id="senha" type="password" {...password} />
 
-        <button>Entrar</button>
+        {loading ?  <Button disabled>Carregando...</Button> :  <Button >Entrar</Button>}
+      
+      <Error error={error} />
+    
         
       </form>
-
-      <Link to="/login/criar">Cadastro</Link>
+      <Link className={styles.perdeu} to="/login/perdeu">Perdeu a Senha?</Link>
+      <div className={styles.cadastro}>
+        <h2 className={styles.subtitle}>Cadastre-se</h2>
+        <p>Ainda não possui conta? Cadastre-se no site.</p>
+      <Link className={stylesbtn.button} to="/login/criar">Cadastro</Link>
+      </div>
     </section>
   )
 }
