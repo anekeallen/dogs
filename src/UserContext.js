@@ -19,6 +19,8 @@ export const UserStorage = ({children}) => {
     setLogin(false);
     window.localStorage.removeItem("token");
     navigate("/login");
+
+    
     
   }, [navigate]);
 
@@ -41,7 +43,7 @@ export const UserStorage = ({children}) => {
         
         await getUser(token);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         } finally {
           setLoading(false);
         }

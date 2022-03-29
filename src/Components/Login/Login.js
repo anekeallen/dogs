@@ -12,6 +12,8 @@ const Login = () => {
 
   const {login} = useContext(UserContext);
 
+  // console.log(login);
+
   if(login) return <Navigate to={"/conta"}></Navigate>
 
   return (
