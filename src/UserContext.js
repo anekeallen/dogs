@@ -20,8 +20,6 @@ export const UserStorage = ({children}) => {
     window.localStorage.removeItem("token");
     navigate("/login");
 
-    
-    
   }, [navigate]);
 
   React.useEffect(()=> {
@@ -57,8 +55,6 @@ export const UserStorage = ({children}) => {
 
     autoLogin();  
 
-    
-   
   }, [userLogout]);
  
   async function getUser(token) {
@@ -69,7 +65,7 @@ export const UserStorage = ({children}) => {
     setData(response_json);
     setLogin(true)
 
-    console.log(response_json);
+    // console.log(response_json);
   }
 
   async function userLogin(username, password) {
@@ -92,11 +88,6 @@ export const UserStorage = ({children}) => {
 
       navigate("/conta");
 
-    
-
-
-
-
     } catch (error) {
       // console.log(error);
 
@@ -107,8 +98,6 @@ export const UserStorage = ({children}) => {
     }
     
   }
-
-
 
   return (
     <UserContext.Provider value={{userLogin, userLogout, data, error, login, loading}}>
