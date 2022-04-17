@@ -6,7 +6,7 @@ import Error from '../Helper/Error'
 import Loading from '../Helper/Loading'
 import styles from './FeedPhotos.module.css';
 
-const FeedPhotos = ({ setModalPhoto }) => {
+const FeedPhotos = ({ setInfinite, page = 1, user = 0, setModalPhoto }) => {
 
   const { data, error, loading, request } = useFetch();
 
@@ -14,14 +14,23 @@ const FeedPhotos = ({ setModalPhoto }) => {
 
     async function getPhoto() {
 
-      const { url, options } = PHOTOS_GET({ page: 1, total: 6, user: 0 });
+      const total = 6;
+
+      const { url, options } = PHOTOS_GET({ page, total, user });
 
       const { response, json } = await request(url, options)
+
+      if (response && response.ok && json.length < total) {
+
+        // console.log('Request: ', json);
+        setInfinite(false);
+
+      }
     }
 
     getPhoto();
 
-  }, [request])
+  }, [request, user, setInfinite, page])
   // console.log(data) ;
 
   if (error) return <Error error={error} />
