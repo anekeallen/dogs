@@ -4,6 +4,8 @@ import styles from './FeedPhotosItem.module.css';
 
 const FeedPhotosItem = ({ photo, setModalPhoto }) => {
 
+  console.log(photo)
+
   function handleClick(e) {
     setModalPhoto(photo);
   }
@@ -12,7 +14,7 @@ const FeedPhotosItem = ({ photo, setModalPhoto }) => {
     <li className={styles.photo} onClick={handleClick}>
 
 
-      <Image src={photo.src} alt={photo.title} />
+      <Image className={styles.image} src={'http://' + photo.src} alt={photo.title} />
       <span className={styles.visualizacao}>{photo.acessos}</span>
     </li>
   )

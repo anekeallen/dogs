@@ -1,4 +1,4 @@
-export const API_URL = 'http://dogsapi.test/json';
+export const API_URL = 'http://devallen.com.br/json';
 
 export function TOKEN_POST(body) {
   return {
